@@ -79,7 +79,7 @@ Total time taken by process from arrival to completion.
 
 Formula:
 
-genui{"math_block_widget_always_prefetch_v2":{"content":"Turnaround\ Time = Completion\ Time - Arrival\ Time"}}
+Turnaround Time = Completion Time - Arrival Time
 
 ---
 
@@ -89,7 +89,7 @@ Time spent waiting in ready queue.
 
 Formula:
 
-genui{"math_block_widget_always_prefetch_v2":{"content":"Waiting\ Time = Turnaround\ Time - Burst\ Time"}}
+Waiting Time = Turnaround Time - Burst Time
 
 ---
 
@@ -99,7 +99,7 @@ Time from arrival until first CPU allocation.
 
 Formula:
 
-genui{"math_block_widget_always_prefetch_v2":{"content":"Response\ Time = First\ CPU\ Allocation - Arrival\ Time"}}
+Response Time = First CPU Allocation - Arrival Time
 
 ---
 
@@ -252,9 +252,7 @@ It follows:
 
 # Gantt Chart
 
-```text
 0 ----- P1 ----- 5 --- P2 --- 8 -- P3 -- 10
-```
 
 ---
 
@@ -268,7 +266,7 @@ It follows:
 
 Average Waiting Time:
 
-genui{"math_block_widget_always_prefetch_v2":{"content":"Average\ WT = \frac{0+4+6}{3} = 3.33"}}
+Average WT = (0+4+6)/{3} = 3.33
 
 ---
 
@@ -339,9 +337,8 @@ Usually SJF refers to non-preemptive version.
 
 # Gantt Chart
 
-```text
 0 ------ P1 ------ 6 -- P3 -- 8 ---- P2 ---- 12
-```
+
 
 ---
 
@@ -400,9 +397,7 @@ If a shorter process arrives, current process is preempted.
 
 # Gantt Chart
 
-```text
 0-1 P1 | 1-2 P2 | 2-4 P3 | 4-7 P2 | 7-14 P1
-```
 
 ---
 
@@ -462,9 +457,7 @@ Smaller number means higher priority.
 
 # Gantt Chart
 
-```text
 0 --- P2 --- 3 ---- P1 ---- 7 ------ P3 ------ 12
-```
 
 ---
 
@@ -542,9 +535,7 @@ Time Quantum = 2
 
 # Gantt Chart
 
-```text
 0-2 P1 | 2-4 P2 | 4-6 P3 | 6-8 P1 | 8-10 P2 | 10-11 P1
-```
 
 ---
 
@@ -716,25 +707,25 @@ Priority changes dynamically.
 
 # Turnaround Time
 
-genui{"math_block_widget_always_prefetch_v2":{"content":"TAT = CT - AT"}}
+TAT = CT - AT
 
 ---
 
 # Waiting Time
 
-genui{"math_block_widget_always_prefetch_v2":{"content":"WT = TAT - BT"}}
+WT = TAT - BT
 
 ---
 
 # Average Waiting Time
 
-genui{"math_block_widget_always_prefetch_v2":{"content":"Average\ WT = \frac{\Sigma WT}{Number\ of\ Processes}"}}
+Average WT = (Total WT)/Number of Processes
 
 ---
 
 # Average Turnaround Time
 
-genui{"math_block_widget_always_prefetch_v2":{"content":"Average\ TAT = \frac{\Sigma TAT}{Number\ of\ Processes}"}}
+Average TAT = (Total TAT)/Number of Processes
 
 ---
 
@@ -819,5 +810,4 @@ Efficient scheduling improves:
 * Responsiveness
 * Throughput
 * User experience
-
 
