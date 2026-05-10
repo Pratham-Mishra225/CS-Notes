@@ -1,0 +1,932 @@
+
+# Introduction
+
+Modern operating systems execute multiple programs simultaneously.
+
+To manage these programs efficiently, the operating system uses concepts like:
+
+* Processes
+* Threads
+* Context Switching
+* Inter Process Communication (IPC)
+
+These concepts are among the most important topics in Operating Systems for placements and interviews.
+
+---
+
+# Program vs Process
+
+Students often confuse programs and processes.
+
+Understanding their difference is very important.
+
+---
+
+# What is a Program?
+
+A program is a passive set of instructions stored on disk.
+
+It is simply a file containing code.
+
+Examples:
+
+* Chrome.exe
+* VSCode.exe
+* music_player.exe
+
+A program does not perform any task until it is executed.
+
+---
+
+# What is a Process?
+
+A process is a program in execution.
+
+When a program starts running, the operating system creates a process.
+
+A process includes:
+
+* Program code
+* Program counter
+* CPU registers
+* Stack
+* Heap
+* Data section
+* Process state
+
+---
+
+# Real Life Example
+
+Think of a recipe book.
+
+* Recipe book = Program
+* Cooking activity = Process
+
+The recipe itself is passive.
+
+Cooking is the active execution.
+
+---
+
+# Difference Between Program and Process
+
+| Feature        | Program                 | Process                |
+| -------------- | ----------------------- | ---------------------- |
+| Nature         | Passive                 | Active                 |
+| Stored In      | Disk                    | Main Memory            |
+| Execution      | Not executing           | Executing              |
+| Resource Usage | No resources allocated  | Resources allocated    | 
+| Lifetime       | Permanent until deleted | Temporary              |
+| Example        | Chrome installer        | Running Chrome browser |
+
+---
+
+# Process Memory Layout
+
+A process is divided into different sections in memory.
+
+---
+
+# 1. Text Section
+
+Contains program instructions.
+
+Also called:
+
+* Code section
+
+---
+
+# 2. Data Section
+
+Contains:
+
+* Global variables
+* Static variables
+
+---
+
+# 3. Heap Section
+
+Used for dynamic memory allocation.
+
+Examples:
+
+* malloc()
+* new keyword
+
+Heap grows upward.
+
+---
+
+# 4. Stack Section
+
+Stores:
+
+* Function calls
+* Local variables
+* Return addresses
+
+Stack grows downward.
+
+---
+
+# Process Control Block (PCB)
+
+The Process Control Block is a data structure used by the operating system to store information about a process.
+
+Each process has its own PCB.
+
+The PCB helps the operating system manage processes.
+
+---
+
+# Information Stored in PCB
+
+---
+
+## 1. Process ID (PID)
+
+Unique identifier of the process.
+
+---
+
+## 2. Process State
+
+Current state of process.
+
+Examples:
+* New
+* Ready
+* Running
+* Waiting
+* Terminated
+---
+
+## 3. Program Counter
+
+Stores address of next instruction.
+
+---
+
+## 4. CPU Registers
+
+Stores CPU register values.
+
+Needed during context switching.
+
+---
+
+## 5. CPU Scheduling Information
+
+Includes:
+
+* Priority
+* Scheduling queue pointers
+
+---
+
+## 6. Memory Management Information
+
+Includes:
+
+* Base register
+* Limit register
+* Page tables
+
+---
+
+## 7. Accounting Information
+
+Includes:
+
+* CPU usage
+* Time limits
+* Process owner
+
+---
+
+## 8. I/O Status Information
+
+Includes:
+
+* Open files
+* Devices allocated
+
+---
+
+# Why PCB is Important
+
+PCB enables:
+
+* Process management
+* Scheduling
+* Context switching
+* Resource tracking
+
+Without PCB, multitasking would not be possible.
+
+---
+
+# Process States
+
+A process changes states during execution.
+
+---
+
+# Basic Process States
+
+---
+
+# 1. New State
+
+The process is being created.
+
+Resources are allocated.
+
+---
+
+# 2. Ready State
+
+The process is ready to execute.
+
+It is waiting for CPU allocation.
+
+---
+
+# 3. Running State
+
+The process is currently executing on CPU.
+
+---
+
+# 4. Waiting (Blocked) State
+
+The process is waiting for an event.
+
+Examples:
+
+* I/O completion
+* User input
+
+---
+
+# 5. Terminated State
+
+The process has finished execution.
+
+Resources are released.
+
+---
+
+# Process State Transition
+
+Typical transitions:
+
+* New → Ready
+* Ready → Running
+* Running → Waiting
+* Waiting → Ready
+* Running → Terminated
+
+---
+
+# Suspended States
+
+Some operating systems also include:
+
+* Ready Suspended
+* Blocked Suspended
+
+Used when processes are temporarily swapped out from memory.
+
+---
+
+# Context Switching
+
+Context switching is the process of saving the state of one process and loading the state of another process.
+
+It allows multitasking.
+
+---
+
+# Why Context Switching is Needed
+
+A CPU can execute only one process at a time.
+
+To create the illusion of parallel execution, the OS rapidly switches between processes.
+
+---
+
+# Steps in Context Switching
+
+1. Save current process state in PCB.
+2. Update process state.
+3. Select next process.
+4. Load new process state.
+5. Resume execution.
+
+---
+
+# Information Saved During Context Switch
+
+* Program counter
+* CPU registers
+* Stack pointer
+* Process state
+
+---
+
+# Context Switching Overhead
+
+Context switching consumes CPU time.
+
+During switching:
+
+* No useful work is done.
+* CPU performance decreases.
+
+Too many context switches reduce efficiency.
+
+---
+
+# Advantages of Context Switching
+
+* Enables multitasking
+* Better CPU utilization
+* Improved responsiveness
+
+---
+
+# Disadvantages of Context Switching
+
+* Performance overhead
+* Cache invalidation
+* Increased complexity
+
+---
+
+# Threads
+
+A thread is the smallest unit of CPU execution.
+
+A process may contain multiple threads.
+
+Threads within the same process share resources.
+
+---
+
+# Process vs Thread
+
+| Feature             | Process     | Thread                |
+| ------------------- | ----------- | --------------------- |
+| Resource Ownership  | Independent | Shared within process |
+| Memory              | Separate    | Shared                |
+| Communication       | Slower      | Faster                |
+| Creation Cost       | High        | Low                   |
+| Context Switch Cost | High        | Lower                 |
+| Isolation           | Strong      | Weak                  |
+
+---
+
+# Components Shared by Threads
+
+Threads share:
+
+* Code section
+* Data section
+* Heap
+* Open files
+
+Each thread has its own:
+
+* Stack
+* Program counter
+* Registers
+
+---
+
+# Benefits of Threads
+
+---
+
+## 1. Responsiveness
+
+Applications remain responsive even if one thread blocks.
+
+Example:
+
+Browser UI remains active while downloading files.
+
+---
+
+## 2. Resource Sharing
+
+Threads share process resources efficiently.
+
+---
+
+## 3. Faster Communication
+
+Threads communicate faster than processes.
+
+---
+
+## 4. Better CPU Utilization
+
+Multiple threads can execute on multiple cores.
+
+---
+
+# Types of Threads
+
+There are two major thread types.
+
+---
+
+# 1. User Level Threads
+
+Managed by user-level thread library.
+
+Kernel is unaware of these threads.
+
+Examples:
+
+* POSIX Threads
+* Java Threads
+
+---
+
+# Advantages of User Level Threads
+
+* Fast creation
+* Fast switching
+* No kernel involvement
+
+---
+
+# Disadvantages of User Level Threads
+
+* If one thread blocks, entire process may block.
+* Cannot fully utilize multicore processors.
+
+---
+
+# 2. Kernel Level Threads
+
+Managed directly by operating system kernel.
+
+Kernel schedules threads individually.
+
+---
+
+# Advantages of Kernel Level Threads
+
+* Better parallelism
+* One blocked thread does not block others
+* Better multicore support
+
+---
+
+# Disadvantages of Kernel Level Threads
+
+* Slower creation
+* Higher overhead
+
+---
+
+# User Threads vs Kernel Threads
+
+| Feature           | User Threads | Kernel Threads   |
+| ----------------- | ------------ | ---------------- |
+| Managed By        | User library | Operating System |
+| Speed             | Faster       | Slower           |
+| Kernel Awareness  | No           | Yes              |
+| Multicore Support | Limited      | Better           |
+| Overhead          | Low          | High             |
+
+---
+
+# Multithreading
+
+Multithreading means executing multiple threads within a single process.
+
+---
+
+# Real World Examples
+
+---
+
+## Web Browser
+
+Different threads handle:
+
+* UI rendering
+* Downloads
+* JavaScript execution
+* Tabs
+
+---
+
+## Video Games
+
+Different threads handle:
+
+* Graphics
+* Physics
+* Audio
+* Networking
+
+---
+
+# Advantages of Multithreading
+
+* Faster execution
+* Better responsiveness
+* Efficient resource sharing
+* Better CPU utilization
+
+---
+
+# Challenges in Multithreading
+
+* Synchronization issues
+* Race conditions
+* Deadlocks
+* Debugging complexity
+
+---
+
+# Inter Process Communication (IPC)
+
+Processes often need to communicate with each other.
+
+IPC mechanisms allow processes to exchange data.
+
+---
+
+# Why IPC is Needed
+
+Examples:
+
+* Browser communicating with server
+* Processes sharing files
+* Producer-consumer systems
+
+---
+
+# Types of IPC
+
+Major IPC mechanisms:
+
+1. Pipes
+2. Shared Memory
+3. Message Queues
+4. Sockets
+5. Semaphores
+
+---
+
+# Pipes
+
+A pipe is a communication channel between processes.
+
+Data flows in one direction.
+
+---
+
+# Types of Pipes
+
+---
+
+## 1. Unnamed Pipes
+
+* Usually between parent and child processes
+* Temporary
+
+---
+
+## 2. Named Pipes (FIFO)
+
+* Have names in file system
+* Unrelated processes can communicate
+
+---
+
+# Advantages of Pipes
+
+* Simple
+* Fast for related processes
+
+---
+
+# Disadvantages of Pipes
+
+* Limited communication
+* Usually unidirectional
+
+---
+
+# Shared Memory
+
+Shared memory allows multiple processes to access the same memory region.
+
+It is one of the fastest IPC methods.
+
+---
+
+# Working of Shared Memory
+
+1. OS creates shared memory segment.
+2. Processes attach to segment.
+3. Processes read/write shared data.
+
+---
+
+# Advantages of Shared Memory
+
+* Very fast
+* High performance
+* No data copying needed
+
+---
+
+# Disadvantages of Shared Memory
+
+* Synchronization required
+* Race conditions possible
+
+---
+
+# Message Queues
+
+Processes communicate by sending messages.
+
+Messages are stored in a queue.
+
+---
+
+# Features
+
+* Asynchronous communication
+* Messages can have priorities
+
+---
+
+# Advantages of Message Queues
+
+* Easy synchronization
+* Good modularity
+
+---
+
+# Disadvantages of Message Queues
+
+* Slower than shared memory
+* Kernel involvement required
+
+---
+
+# Sockets
+
+Sockets allow communication between processes over a network.
+
+Used in client-server systems.
+
+---
+
+# Examples of Socket Usage
+
+* Web browsing
+* Online gaming
+* Chat applications
+
+---
+
+# Types of Sockets
+
+---
+
+## 1. TCP Sockets
+
+Reliable communication.
+
+Connection-oriented.
+
+---
+
+## 2. UDP Sockets
+
+Faster but unreliable communication.
+
+Connectionless.
+
+---
+
+# Advantages of Sockets
+
+* Network communication
+* Scalable systems
+
+---
+
+# Disadvantages of Sockets
+
+* More complex
+* Slower than local IPC
+
+---
+
+# Semaphores
+
+A semaphore is a synchronization tool used to control access to shared resources.
+
+Semaphores help prevent race conditions.
+
+---
+
+# Types of Semaphores
+
+---
+
+## 1. Binary Semaphore
+
+Value can be:
+
+* 0
+* 1
+
+Works like a mutex lock.
+
+---
+
+## 2. Counting Semaphore
+
+Can have multiple values.
+
+Used for managing multiple resources.
+
+---
+
+# Semaphore Operations
+
+---
+
+## wait()
+
+Decreases semaphore value.
+
+If value becomes negative, process waits.
+
+---
+
+## signal()
+
+Increases semaphore value.
+
+Wakes waiting process if present.
+
+---
+
+# Advantages of Semaphores
+
+* Prevent race conditions
+* Resource synchronization
+* Process coordination
+
+---
+
+# Disadvantages of Semaphores
+
+* Deadlocks possible
+* Difficult debugging
+* Complex implementation
+
+---
+
+# Zombie Process
+
+A zombie process is a terminated process whose PCB still exists.
+
+Parent has not yet collected child status.
+
+---
+
+# Orphan Process
+
+An orphan process is a process whose parent has terminated.
+
+It is adopted by init/systemd process.
+
+---
+
+# Daemon Process
+
+A daemon is a background process running continuously.
+
+Examples:
+
+* Web server
+* Database server
+
+---
+
+# Important Interview Questions
+
+---
+
+# Process Questions
+
+1. What is a process?
+2. Difference between program and process?
+3. What is PCB?
+4. Explain process states.
+5. What is context switching?
+6. Why is context switching expensive?
+
+---
+
+# Thread Questions
+
+1. What is a thread?
+2. Difference between process and thread?
+3. User threads vs kernel threads?
+4. Advantages of multithreading?
+5. What resources are shared among threads?
+
+---
+
+# IPC Questions
+
+1. What is IPC?
+2. Shared memory vs message queue?
+3. Pipe vs socket?
+4. Why is shared memory fastest?
+5. What is a semaphore?
+
+---
+
+# Advanced Questions
+
+1. What is race condition?
+2. What are zombie and orphan processes?
+3. What happens during context switching?
+4. Why are threads lighter than processes?
+5. Difference between concurrency and parallelism?
+
+---
+
+# Quick Revision Notes
+
+* Program is passive, process is active.
+* PCB stores process information.
+* Context switching enables multitasking.
+* Threads are lightweight execution units.
+* Threads share process resources.
+* User threads are faster but limited.
+* Kernel threads provide better parallelism.
+* IPC enables communication between processes.
+* Shared memory is fastest IPC mechanism.
+* Semaphores are used for synchronization.
+
+---
+
+# Key Terms
+
+| Term              | Meaning                                |
+| ----------------- | -------------------------------------- |
+| PCB               | Process Control Block                  |
+| PID               | Process ID                             |
+| IPC               | Inter Process Communication            |
+| Thread            | Smallest execution unit                |
+| Context Switching | Switching CPU between processes        |
+| Semaphore         | Synchronization mechanism              |
+| Socket            | Network communication endpoint         |
+| Zombie Process    | Terminated process waiting for cleanup |
+| Orphan Process    | Process whose parent terminated        |
+
+---
+
+# Conclusion
+
+Processes and threads are fundamental concepts in operating systems.
+
+They help the operating system execute multiple tasks efficiently while managing resources properly.
+
+Understanding:
+
+* Process management
+* Threading
+* Context switching
+* IPC mechanisms
+
+is extremely important for:
+
+* Placement interviews
+* System programming
+* Backend development
+* Multithreaded applications
+* Cloud systems
+* Cybersecurity
+* Operating system design
